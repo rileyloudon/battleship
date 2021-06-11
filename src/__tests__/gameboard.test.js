@@ -74,5 +74,7 @@ test('Gameboard returns error if placing a ship on another ship', () => {
 
   testGameboard.placeShip(5, 5, testShip, 'horizontal');
 
-  expect(() => testGameboard.placeShip(5, 5, testShip2, 'vertical')).toThrow();
+  expect(() => testGameboard.placeShip(5, 5, testShip2, 'vertical')).toThrow(
+    'Ship already there'
+  );
 });
