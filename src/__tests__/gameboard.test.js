@@ -19,52 +19,58 @@ test('Gameboard records misses', () => {
 });
 
 test('Gameboard correctly places ships horizontally', () => {
+  const returnObject = shipFactory(3);
   const testGameboard = gameboardFactory();
-  const testShip = shipFactory(3);
-  testGameboard.placeShip(0, 2, testShip, 'horizontal');
-  expect(testGameboard.map.row[0]).toStrictEqual([
-    'empty',
-    'empty',
-    'ship',
-    'ship',
-    'ship',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-  ]);
+  testGameboard.placeShip(0, 2, 3, 'horizontal');
+  expect(testGameboard.map.row[0].toString()).toStrictEqual(
+    [
+      'empty',
+      'empty',
+      returnObject,
+      returnObject,
+      returnObject,
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+    ].toString()
+  );
 });
 
-test('Gameboard correctly places ships verticaly', () => {
+test.only('Gameboard correctly places ships verticaly', () => {
+  const returnObject = shipFactory(2);
   const testGameboard = gameboardFactory();
-  const testShip = shipFactory(2);
-  testGameboard.placeShip(5, 5, testShip, 'vertical');
-  expect(testGameboard.map.row[5]).toStrictEqual([
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'ship',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-  ]);
+  testGameboard.placeShip(5, 5, 2, 'vertical');
+  expect(testGameboard.map.row[5].toString()).toStrictEqual(
+    [
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      returnObject,
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+    ].toString()
+  );
 
-  expect(testGameboard.map.row[6]).toStrictEqual([
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-    'ship',
-    'empty',
-    'empty',
-    'empty',
-    'empty',
-  ]);
+  expect(testGameboard.map.row[6].toString()).toStrictEqual(
+    [
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      returnObject,
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+    ].toString()
+  );
 });
 
 test('Gameboard returns error if placing a ship on another ship', () => {
