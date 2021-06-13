@@ -3,7 +3,9 @@ import shipFactory from '../factories/ship';
 
 test('Gameboard records misses', () => {
   const testGameboard = gameboardFactory();
+
   testGameboard.recieveAttack(2, 5);
+
   expect(testGameboard.map.row[2]).toStrictEqual([
     'empty',
     'empty',
@@ -21,7 +23,9 @@ test('Gameboard records misses', () => {
 test('Gameboard correctly places ships horizontally', () => {
   const returnObject = shipFactory(3);
   const testGameboard = gameboardFactory();
+
   testGameboard.placeShip(0, 2, 3, 'horizontal');
+
   expect(testGameboard.map.row[0].toString()).toStrictEqual(
     [
       'empty',
@@ -38,10 +42,11 @@ test('Gameboard correctly places ships horizontally', () => {
   );
 });
 
-test.only('Gameboard correctly places ships verticaly', () => {
+test('Gameboard correctly places ships verticaly', () => {
   const returnObject = shipFactory(2);
   const testGameboard = gameboardFactory();
   testGameboard.placeShip(5, 5, 2, 'vertical');
+
   expect(testGameboard.map.row[5].toString()).toStrictEqual(
     [
       'empty',
@@ -73,14 +78,23 @@ test.only('Gameboard correctly places ships verticaly', () => {
   );
 });
 
-test('Gameboard returns error if placing a ship on another ship', () => {
+test('Returns an error if placing a ship on another ship', () => {
   const testGameboard = gameboardFactory();
-  const testShip = shipFactory(2);
-  const testShip2 = shipFactory(5);
+  testGameboard.placeShip(5, 5, 2, 'horizontal');
 
-  testGameboard.placeShip(5, 5, testShip, 'horizontal');
-
-  expect(() => testGameboard.placeShip(5, 5, testShip2, 'vertical')).toThrow(
+  expect(() => testGameboard.placeShip(5, 5, 5, 'vertical')).toThrow(
     'Ship already there'
+  );
+});
+
+test('Returns an error if the ship is too large to fit inside the gameboard', () => {
+  const testGameboard = gameboardFactory();
+
+  expect(() => testGameboard.placeShip(0, 9, 3, 'horizontal')).toThrow(
+    'Not enough space for that ship!'
+  );
+
+  expect(() => testGameboard.placeShip(8, 0, 4, 'vertical')).toThrow(
+    'Not enough space for that ship!'
   );
 });
