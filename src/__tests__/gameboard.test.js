@@ -20,6 +20,16 @@ test('Gameboard records misses', () => {
   ]);
 });
 
+test('Gameboard records hits', () => {
+  const testGameboard = gameboardFactory();
+
+  testGameboard.placeShip(0, 0, 3, 'horizontal');
+  testGameboard.recieveAttack(0, 0);
+  testGameboard.recieveAttack(0, 2);
+
+  expect(testGameboard.map.row[0][0].hitSpots).toEqual([true, false, true]);
+});
+
 test('Gameboard correctly places ships horizontally', () => {
   const returnObject = shipFactory(3);
   const testGameboard = gameboardFactory();
