@@ -20,18 +20,8 @@ test('Gameboard records misses', () => {
   ]);
 });
 
-test('Gameboard records hits', () => {
-  const testGameboard = gameboardFactory();
-
-  testGameboard.placeShip(0, 0, 3, 'horizontal');
-  testGameboard.recieveAttack(0, 0);
-  testGameboard.recieveAttack(0, 2);
-
-  expect(testGameboard.map.row[0][0].hitSpots).toEqual([true, false, true]);
-});
-
 test('Gameboard correctly places ships horizontally', () => {
-  const returnObject = shipFactory(3);
+  const returnObject = shipFactory(null, null, 3);
   const testGameboard = gameboardFactory();
 
   testGameboard.placeShip(0, 2, 3, 'horizontal');
@@ -53,7 +43,7 @@ test('Gameboard correctly places ships horizontally', () => {
 });
 
 test('Gameboard correctly places ships verticaly', () => {
-  const returnObject = shipFactory(2);
+  const returnObject = shipFactory(null, null, 2);
   const testGameboard = gameboardFactory();
   testGameboard.placeShip(5, 5, 2, 'vertical');
 
@@ -88,6 +78,34 @@ test('Gameboard correctly places ships verticaly', () => {
   );
 });
 
+test('Gameboard records hits', () => {
+  const testGameboard = gameboardFactory();
+
+  testGameboard.placeShip(8, 7, 3, 'horizontal');
+  testGameboard.recieveAttack(8, 7);
+  testGameboard.recieveAttack(8, 8);
+
+  expect(testGameboard.map.row[8][7].hitSpots).toEqual([true, true, false]);
+});
+
+test('Gameboard knows when all ships have been sunk', () => {
+  const testGameboard = gameboardFactory();
+
+  testGameboard.placeShip(2, 4, 3, 'vertical');
+  testGameboard.placeShip(5, 5, 4, 'horizontal');
+
+  testGameboard.recieveAttack(2, 4);
+  testGameboard.recieveAttack(3, 4);
+  testGameboard.recieveAttack(4, 4);
+
+  testGameboard.recieveAttack(5, 5);
+  testGameboard.recieveAttack(5, 6);
+  testGameboard.recieveAttack(5, 7);
+  testGameboard.recieveAttack(5, 8);
+
+  expect(testGameboard.allShipsSunk).toBe(true);
+});
+
 test('Returns an error if placing a ship on another ship', () => {
   const testGameboard = gameboardFactory();
   testGameboard.placeShip(5, 5, 2, 'horizontal');
@@ -104,7 +122,7 @@ test('Returns an error if the ship is too large to fit inside the gameboard', ()
     'Not enough space for that ship!'
   );
 
-  expect(() => testGameboard.placeShip(8, 0, 4, 'vertical')).toThrow(
+  expect(() => testGameboard.placeShip(8, 0, 3, 'vertical')).toThrow(
     'Not enough space for that ship!'
   );
 });
