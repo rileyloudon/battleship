@@ -6,6 +6,7 @@ const gameboardFactory = () => {
     allShipsSunk: false,
     map: {
       row: {
+        //  x: [y]
         0: [...Array(10).fill('empty')],
         1: [...Array(10).fill('empty')],
         2: [...Array(10).fill('empty')],
@@ -20,7 +21,9 @@ const gameboardFactory = () => {
     },
 
     placeShip(startX, startY, newShipLength, direction) {
-      this.gameboardShips.push(shipFactory(newShipLength));
+      this.gameboardShips.push(
+        shipFactory(startX, startY, newShipLength, direction)
+      );
 
       const placeShipHoriontal = (startX, startY, newShipLength) => {
         if (startY + newShipLength <= this.map.row[startX].length) {
@@ -55,12 +58,19 @@ const gameboardFactory = () => {
     },
 
     recieveAttack(x, y) {
-      if (this.map.row[x][y] === 'empty') {
+      const attackedSquare = this.map.row[x][y];
+
+      if (attackedSquare === 'empty') {
         this.map.row[x][y] = 'miss';
       } else {
-        this.map.row[x][y] = 'hit';
-        // this.map.row[x][y].hitSpot(x OR y -> depning on horizontal or vertical);
-        // might have to add an orientation to ship factory
+        attackedSquare.orientation === 'horizontal'
+          ? attackedSquare.hit(y - attackedSquare.startPos.y)
+          : attackedSquare.hit(x - attackedSquare.startPos.x);
+
+        if (attackedSquare.isSunk()) {
+          if (this.gameboardShips.every((ship) => ship.sunk === true))
+            this.allShipsSunk = true;
+        }
       }
     },
   };
