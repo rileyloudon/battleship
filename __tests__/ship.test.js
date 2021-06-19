@@ -1,4 +1,4 @@
-import shipFactory from '../factories/ship';
+import shipFactory from '../src/factories/ship';
 
 test('Ship registers hits', () => {
   const testShip = shipFactory(null, null, 3);

@@ -1,5 +1,5 @@
-import gameboardFactory from '../factories/gameboard';
-import shipFactory from '../factories/ship';
+import gameboardFactory from '../src/factories/gameboard';
+import shipFactory from '../src/factories/ship';
 
 test('Gameboard records misses', () => {
   const testGameboard = gameboardFactory();
