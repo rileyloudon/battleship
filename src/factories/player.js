@@ -1,14 +1,24 @@
 const playerFactory = (playerType, gameboard) => {
-  const randomSquare = () => {
-    return Math.floor(Math.random() * (9 + 1));
-  };
+  const availableAttacks = [...Array(100).keys()];
 
   return playerType === 'computer'
     ? {
         playerName: 'Computer',
 
         attack() {
-          gameboard.recieveAttack(randomSquare(), randomSquare());
+          const randoomAttack = Math.floor(
+            Math.random() * (availableAttacks.length - 1)
+          );
+
+          const selectedAttack = availableAttacks[randoomAttack]
+            .toString()
+            .split('');
+
+          const attackX = selectedAttack[0];
+          const attackY = selectedAttack[1];
+
+          gameboard.recieveAttack(attackX, attackY);
+          availableAttacks.splice(randoomAttack, 1);
         },
       }
     : {
