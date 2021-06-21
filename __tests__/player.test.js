@@ -1,7 +1,5 @@
 import playerFactory from '../src/factories/player';
 import gameboardFactory from '../src/factories/gameboard';
-import shipFactory from '../src/factories/ship';
-import { afterEach, expect, jest } from '@jest/globals';
 
 // Testing random returns with jest:
 // https://stackoverflow.com/a/57730344/12843016
