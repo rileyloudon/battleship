@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+  --dark: #2c2c2c;
+  --light: #f4ebd9;
+  --background: #52504f;
+  --blue: #23bfff;
+}
+
+body {
+  background-color: var(--dark);
+  margin: 0;
+  font-family: 'Lato', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+#app {
+  text-align: center;
+}
+
+h2,
+p {
+  color: var(--light);
+}
+
+label {
+  cursor: pointer;
+  position: relative;
+}
+
+label + label {
+  margin: 15px;
+}
+
+input[type='radio'] {
+  opacity: 0;
+  position: absolute;
+}
+
+input[type='radio'] + span {
+  font-family: 'Material Icons';
+  font-size: 24px;
+  color: var(--light);
+  border-radius: 10%;
+  padding: 12px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+}
+
+input[type='radio']:checked + span {
+  color: var(--blue);
+  background-color: var(--background);
+}
+
+button {
+  font-size: 0.9em;
+  margin-top: 25px;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--light);
+  border: 1px solid var(--light);
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+
+button:hover {
+  color: var(--blue);
+  border: 1px solid var(--blue);
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--light);
+  }
+  h2,
+  p {
+    color: var(--dark);
+  }
+}
