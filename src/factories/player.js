@@ -6,19 +6,21 @@ const playerFactory = (playerType, gameboard) => {
         playerName: 'Computer',
 
         attack() {
-          const randoomAttack = Math.floor(
+          const randomAttack = Math.floor(
             Math.random() * (availableAttacks.length - 1)
           );
 
-          const selectedAttack = availableAttacks[randoomAttack]
-            .toString()
-            .split('');
+          let selectedAttack = availableAttacks[randomAttack];
+          selectedAttack =
+            selectedAttack < 10
+              ? '0' + selectedAttack.split('')
+              : selectedAttack.toString().split('');
 
           const attackX = selectedAttack[0];
           const attackY = selectedAttack[1];
 
           gameboard.recieveAttack(attackX, attackY);
-          availableAttacks.splice(randoomAttack, 1);
+          availableAttacks.splice(randomAttack, 1);
         },
       }
     : {
