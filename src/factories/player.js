@@ -22,7 +22,7 @@ const playerFactory = (playerType, gameboard) => {
         },
       }
     : {
-        playerName: 'You',
+        playerName: playerType,
 
         attack(x, y) {
           gameboard.recieveAttack(x, y);
