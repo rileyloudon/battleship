@@ -8,7 +8,7 @@ const initialLoad = () => {
     <p>Who's playing?</p>
     
     <p>Player 1</p>
-    <label class=''> 
+    <label class='material-icons'> 
       <input type='radio' name='player1' value='human' checked>
       <span>&#xE7FD</span>
     </label>
