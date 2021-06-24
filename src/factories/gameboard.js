@@ -4,7 +4,7 @@ const gameboardFactory = () => {
   return {
     gameboardShips: [],
     allShipsSunk: false,
-    map: {
+    board: {
       row: {
         //  x: [y]
         0: [...Array(10).fill('empty')],
@@ -26,10 +26,10 @@ const gameboardFactory = () => {
       );
 
       const placeShipHoriontal = (startX, startY, newShipLength) => {
-        if (startY + newShipLength <= this.map.row[startX].length) {
-          if (this.map.row[startX].indexOf(!'empty', startY) === -1) {
+        if (startY + newShipLength <= this.board.row[startX].length) {
+          if (this.board.row[startX].indexOf(!'empty', startY) === -1) {
             for (let i = startY; i < startY + newShipLength; i++) {
-              this.map.row[startX][i] =
+              this.board.row[startX][i] =
                 this.gameboardShips[this.gameboardShips.length - 1];
             }
           } else {
@@ -39,13 +39,13 @@ const gameboardFactory = () => {
       };
 
       const placeShipVertical = (startX, startY, newShipLength) => {
-        if (startX + newShipLength <= Object.keys(this.map.row).length) {
+        if (startX + newShipLength <= Object.keys(this.board.row).length) {
           for (let i = startX; i < startX + newShipLength; i++) {
-            if (this.map.row[i][startX] !== 'empty')
+            if (this.board.row[i][startX] !== 'empty')
               throw new Error('Ship already there');
           }
           for (let i = startX; i < startX + newShipLength; i++) {
-            this.map.row[i][startY] =
+            this.board.row[i][startY] =
               this.gameboardShips[this.gameboardShips.length - 1];
           }
         } else throw new Error('Not enough space for that ship!');
@@ -58,10 +58,10 @@ const gameboardFactory = () => {
     },
 
     recieveAttack(x, y) {
-      const attackedSquare = this.map.row[x][y];
+      const attackedSquare = this.board.row[x][y];
 
       if (attackedSquare === 'empty') {
-        this.map.row[x][y] = 'miss';
+        this.board.row[x][y] = 'miss';
       } else {
         attackedSquare.orientation === 'horizontal'
           ? attackedSquare.hit(y - attackedSquare.startPos.y)

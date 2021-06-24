@@ -16,7 +16,7 @@ test('Computer picks a random target', () => {
   testPlayer.attack();
   testPlayer.attack();
 
-  expect(testGameboard.map.row[4][4].hitSpots).toEqual([
+  expect(testGameboard.board.row[4][4].hitSpots).toEqual([
     false,
     false,
     true,

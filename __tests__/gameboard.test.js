@@ -6,7 +6,7 @@ test('Gameboard records misses', () => {
 
   testGameboard.recieveAttack(2, 5);
 
-  expect(testGameboard.map.row[2]).toStrictEqual([
+  expect(testGameboard.board.row[2]).toStrictEqual([
     'empty',
     'empty',
     'empty',
@@ -26,7 +26,7 @@ test('Gameboard correctly places ships horizontally', () => {
 
   testGameboard.placeShip(0, 2, 3, 'horizontal');
 
-  expect(testGameboard.map.row[0].toString()).toStrictEqual(
+  expect(testGameboard.board.row[0].toString()).toStrictEqual(
     [
       'empty',
       'empty',
@@ -47,7 +47,7 @@ test('Gameboard correctly places ships verticaly', () => {
   const testGameboard = gameboardFactory();
   testGameboard.placeShip(5, 5, 2, 'vertical');
 
-  expect(testGameboard.map.row[5].toString()).toStrictEqual(
+  expect(testGameboard.board.row[5].toString()).toStrictEqual(
     [
       'empty',
       'empty',
@@ -62,7 +62,7 @@ test('Gameboard correctly places ships verticaly', () => {
     ].toString()
   );
 
-  expect(testGameboard.map.row[6].toString()).toStrictEqual(
+  expect(testGameboard.board.row[6].toString()).toStrictEqual(
     [
       'empty',
       'empty',
@@ -85,7 +85,7 @@ test('Gameboard records hits', () => {
   testGameboard.recieveAttack(8, 7);
   testGameboard.recieveAttack(8, 8);
 
-  expect(testGameboard.map.row[8][7].hitSpots).toEqual([true, true, false]);
+  expect(testGameboard.board.row[8][7].hitSpots).toEqual([true, true, false]);
 });
 
 test('Gameboard knows when all ships have been sunk', () => {
