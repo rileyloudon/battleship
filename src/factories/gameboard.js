@@ -20,20 +20,25 @@ const gameboardFactory = () => {
       },
     },
 
-    placeShip(startX, startY, newShipLength, direction) {
-      this.gameboardShips.push(
-        shipFactory(startX, startY, newShipLength, direction)
-      );
+    placeShip(startX, startY, name, direction) {
+      if (this.gameboardShips.some((ship) => ship.name === name)) {
+        this.removeShip(name);
+      }
+
+      this.gameboardShips.push(shipFactory(startX, startY, name, direction));
+
+      const newShipLength =
+        this.gameboardShips[this.gameboardShips.length - 1].length;
 
       const placeShipHoriontal = (startX, startY, newShipLength) => {
         if (startY + newShipLength <= this.board.row[startX].length) {
-          if (this.board.row[startX].indexOf(!'empty', startY) === -1) {
-            for (let i = startY; i < startY + newShipLength; i++) {
-              this.board.row[startX][i] =
-                this.gameboardShips[this.gameboardShips.length - 1];
-            }
-          } else {
-            throw new Error('Ship already there');
+          for (let i = startY; i < startY + newShipLength; i++) {
+            if (this.board.row[startX][i] !== 'empty')
+              throw new Error('Ship already there');
+          }
+          for (let i = startY; i < startY + newShipLength; i++) {
+            this.board.row[startX][i] =
+              this.gameboardShips[this.gameboardShips.length - 1];
           }
         } else throw new Error('Not enough space for that ship!');
       };
@@ -41,7 +46,7 @@ const gameboardFactory = () => {
       const placeShipVertical = (startX, startY, newShipLength) => {
         if (startX + newShipLength <= Object.keys(this.board.row).length) {
           for (let i = startX; i < startX + newShipLength; i++) {
-            if (this.board.row[i][startX] !== 'empty')
+            if (this.board.row[i][startY] !== 'empty')
               throw new Error('Ship already there');
           }
           for (let i = startX; i < startX + newShipLength; i++) {
@@ -55,6 +60,16 @@ const gameboardFactory = () => {
         placeShipHoriontal(startX, startY, newShipLength);
       else if (direction === 'vertical')
         placeShipVertical(startX, startY, newShipLength);
+    },
+
+    removeShip(name) {
+      Object.entries(this.board.row).forEach((row, x) =>
+        row[1].forEach((square, y) => {
+          if (square !== 'empty' && square.name === name) {
+            this.board.row[x][y] = 'empty';
+          }
+        })
+      );
     },
 
     recieveAttack(x, y) {
