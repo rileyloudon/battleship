@@ -21,10 +21,10 @@ test('Gameboard records misses', () => {
 });
 
 test('Gameboard correctly places ships horizontally', () => {
-  const returnObject = shipFactory(null, null, 3);
+  const returnObject = shipFactory(null, null, 'Submarine');
   const testGameboard = gameboardFactory();
 
-  testGameboard.placeShip(0, 2, 3, 'horizontal');
+  testGameboard.placeShip(0, 2, 'Submarine', 'horizontal');
 
   expect(testGameboard.board.row[0].toString()).toStrictEqual(
     [
@@ -43,9 +43,9 @@ test('Gameboard correctly places ships horizontally', () => {
 });
 
 test('Gameboard correctly places ships verticaly', () => {
-  const returnObject = shipFactory(null, null, 2);
+  const returnObject = shipFactory(null, null, 'Destroyer');
   const testGameboard = gameboardFactory();
-  testGameboard.placeShip(5, 5, 2, 'vertical');
+  testGameboard.placeShip(5, 5, 'Destroyer', 'vertical');
 
   expect(testGameboard.board.row[5].toString()).toStrictEqual(
     [
@@ -78,10 +78,30 @@ test('Gameboard correctly places ships verticaly', () => {
   );
 });
 
+test('Gameboard can remove ships', () => {
+  const testGameboard = gameboardFactory();
+
+  testGameboard.placeShip(5, 5, 'Carrier', 'horizontal');
+  testGameboard.removeShip(5);
+
+  expect(testGameboard.board.row[5]).toEqual([
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+    'empty',
+  ]);
+});
+
 test('Gameboard records hits', () => {
   const testGameboard = gameboardFactory();
 
-  testGameboard.placeShip(8, 7, 3, 'horizontal');
+  testGameboard.placeShip(8, 7, 'Cruiser', 'horizontal');
   testGameboard.recieveAttack(8, 7);
   testGameboard.recieveAttack(8, 8);
 
@@ -91,8 +111,8 @@ test('Gameboard records hits', () => {
 test('Gameboard knows when all ships have been sunk', () => {
   const testGameboard = gameboardFactory();
 
-  testGameboard.placeShip(2, 4, 3, 'vertical');
-  testGameboard.placeShip(5, 5, 4, 'horizontal');
+  testGameboard.placeShip(2, 4, 'Cruiser', 'vertical');
+  testGameboard.placeShip(5, 5, 'Battleship', 'horizontal');
 
   testGameboard.recieveAttack(2, 4);
   testGameboard.recieveAttack(3, 4);
@@ -108,9 +128,9 @@ test('Gameboard knows when all ships have been sunk', () => {
 
 test('Returns an error if placing a ship on another ship', () => {
   const testGameboard = gameboardFactory();
-  testGameboard.placeShip(5, 5, 2, 'horizontal');
+  testGameboard.placeShip(5, 5, 'Destroyer', 'horizontal');
 
-  expect(() => testGameboard.placeShip(5, 5, 5, 'vertical')).toThrow(
+  expect(() => testGameboard.placeShip(4, 5, 'Carrier', 'vertical')).toThrow(
     'Ship already there'
   );
 });
@@ -118,11 +138,11 @@ test('Returns an error if placing a ship on another ship', () => {
 test('Returns an error if the ship is too large to fit inside the gameboard', () => {
   const testGameboard = gameboardFactory();
 
-  expect(() => testGameboard.placeShip(0, 9, 3, 'horizontal')).toThrow(
+  expect(() => testGameboard.placeShip(0, 9, 'Submarine', 'horizontal')).toThrow(
     'Not enough space for that ship!'
   );
 
-  expect(() => testGameboard.placeShip(8, 0, 3, 'vertical')).toThrow(
+  expect(() => testGameboard.placeShip(8, 0, 'Cruiser', 'vertical')).toThrow(
     'Not enough space for that ship!'
   );
 });

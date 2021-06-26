@@ -11,7 +11,7 @@ afterEach(() => jest.spyOn(global.Math, 'random').mockRestore());
 test('Computer picks a random target', () => {
   const testGameboard = gameboardFactory();
   const testPlayer = playerFactory('computer', testGameboard);
-  testGameboard.placeShip(4, 2, 5, 'horizontal');
+  testGameboard.placeShip(4, 2, 'Carrier', 'horizontal');
 
   testPlayer.attack();
   testPlayer.attack();
