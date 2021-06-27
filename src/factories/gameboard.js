@@ -63,6 +63,7 @@ const gameboardFactory = () => {
     },
 
     removeShip(name) {
+      this.gameboardShips = this.gameboardShips.filter((ship) => ship.name !== name);
       Object.entries(this.board.row).forEach((row, x) =>
         row[1].forEach((square, y) => {
           if (square !== 'empty' && square.name === name) {
