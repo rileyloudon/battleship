@@ -1,5 +1,4 @@
-import gameboardFactory from '../factories/gameboard';
-import game from '../modules/game';
+import setupP1 from '../modules/game';
 
 const initialLoad = () => {
   const app = document.getElementById('app');
@@ -42,7 +41,8 @@ const initialLoad = () => {
       document.querySelector('input[name=player2]:checked').value === 'human'
         ? 'Player 2'
         : 'computer';
-    game(player1, player2);
+
+    setupP1(player1, player2);
   });
 };
 
