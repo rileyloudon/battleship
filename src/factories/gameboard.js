@@ -79,6 +79,8 @@ const gameboardFactory = () => {
       if (attackedSquare === 'empty') {
         this.board.row[x][y] = 'miss';
       } else {
+        this.board.row[x][y] = 'hit';
+
         attackedSquare.orientation === 'horizontal'
           ? attackedSquare.hit(y - attackedSquare.startPos.y)
           : attackedSquare.hit(x - attackedSquare.startPos.x);

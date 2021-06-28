@@ -82,7 +82,7 @@ test('Gameboard can remove ships', () => {
   const testGameboard = gameboardFactory();
 
   testGameboard.placeShip(5, 5, 'Carrier', 'horizontal');
-  testGameboard.removeShip(5);
+  testGameboard.removeShip('Carrier');
 
   expect(testGameboard.board.row[5]).toEqual([
     'empty',
@@ -99,13 +99,30 @@ test('Gameboard can remove ships', () => {
 });
 
 test('Gameboard records hits', () => {
+  const returnObject = shipFactory(8, 7, 'Cruiser', 'horizontal');
+  returnObject.hitSpots = [true, true, false];
+
   const testGameboard = gameboardFactory();
 
   testGameboard.placeShip(8, 7, 'Cruiser', 'horizontal');
   testGameboard.recieveAttack(8, 7);
   testGameboard.recieveAttack(8, 8);
 
-  expect(testGameboard.board.row[8][7].hitSpots).toEqual([true, true, false]);
+  expect(testGameboard.gameboardShips[0].hitSpots).toEqual([true, true, false]);
+  expect(testGameboard.board.row[8].toString()).toEqual(
+    [
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      'hit',
+      'hit',
+      returnObject,
+    ].toString()
+  );
 });
 
 test('Gameboard knows when all ships have been sunk', () => {
