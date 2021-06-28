@@ -3,7 +3,7 @@ const playerFactory = (playerType, gameboard) => {
 
   return playerType === 'computer'
     ? {
-        playerName: 'Computer',
+        name: 'Computer',
 
         attack() {
           const randomAttack = Math.floor(
@@ -24,7 +24,7 @@ const playerFactory = (playerType, gameboard) => {
         },
       }
     : {
-        playerName: playerType,
+        name: playerType,
 
         attack(x, y) {
           gameboard.recieveAttack(x, y);
