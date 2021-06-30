@@ -13,7 +13,7 @@ const playerFactory = (playerType, gameboard) => {
           let selectedAttack = availableAttacks[randomAttack];
           selectedAttack =
             selectedAttack < 10
-              ? '0' + selectedAttack.split('')
+              ? ('0' + selectedAttack).split('')
               : selectedAttack.toString().split('');
 
           const attackX = selectedAttack[0];
