@@ -5,6 +5,8 @@
   --light: #f4ebd9;
   --background: #52504f;
   --blue: #23bfff;
+  --miss: rgba(255, 255, 255, 0.4);
+  --hit: rgba(255, 0, 0, 0.4);
 }
 
 body {
@@ -19,6 +21,7 @@ body {
   text-align: center;
 }
 
+h1,
 h2,
 h4,
 p {
@@ -30,7 +33,7 @@ h2 {
 }
 
 h4 {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -92,7 +95,9 @@ button:hover {
 .ship-orientation {
 }
 
-.container {
+.container,
+.container-p1,
+.container-p2 {
   margin: auto;
   margin-top: 20px;
   width: 500px;
@@ -105,18 +110,37 @@ button:hover {
 
 .ocean {
   border: 1px solid var(--background);
-  width: 100%;
-  height: 100%;
 }
 
 .occupied {
-  background-color: var(--blue);
+  border: 1px solid var(--blue);
+}
+
+.miss {
+  background-color: var(--miss);
+  /* border: 1px solid var(--miss); */
+}
+
+.hit {
+  background-color: var(--hit);
+}
+
+.battle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.player-1,
+.player-2 {
+  margin: 0 25px 25px 25px;
 }
 
 @media (prefers-color-scheme: light) {
   body {
     background-color: var(--light);
   }
+
   h2,
   p {
     color: var(--dark);
