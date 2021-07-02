@@ -1,4 +1,4 @@
-const placeShip = (currentGameboard, currentPlayer, opponent) => {
+const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
   const renderMap = () => {
     return Object.entries(currentGameboard.board.row)
       .map((row, x) =>
@@ -16,8 +16,7 @@ const placeShip = (currentGameboard, currentPlayer, opponent) => {
   const app = document.getElementById('app');
   app.innerHTML = `
       <h2>Battleship</h2>
-      <h4>${currentPlayer}</h4>
-      <p>Place you ships</p> 
+      <h4>${currentPlayer} - Place Your Ships</h4>
       ${
         opponent === 'Player 1' || opponent === 'Player 2'
           ? `<p>(Don't let ${opponent} see!)</p>`
@@ -33,7 +32,7 @@ const placeShip = (currentGameboard, currentPlayer, opponent) => {
           <span class='text ship'>Battleship (4 Spots)</span>
         </label>        
         <label>
-          <input type='radio' name='ship' value='Cruiser'>
+          <input type='radio' name='ship' value='Cruiser' checked>
           <span class='text ship'>Cruiser (3 Spots)</span>
         </label>        
         <label>
@@ -96,4 +95,4 @@ const placeShip = (currentGameboard, currentPlayer, opponent) => {
   };
 };
 
-export default placeShip;
+export default placeHumanShips;
