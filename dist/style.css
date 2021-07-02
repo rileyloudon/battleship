@@ -51,21 +51,17 @@ input[type='radio'] {
 input[type='radio'] + span {
   font-size: 24px;
   color: var(--light);
-  border-radius: 10%;
   padding: 12px;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
 }
 
 input[type='radio'] + span.text {
   font-size: 16px;
-  border-radius: 10px;
   padding: 8px;
 }
 
 input[type='radio']:checked + span {
+  border-bottom: 1px solid var(--blue);
   color: var(--blue);
-  background-color: var(--background);
 }
 
 button {
