@@ -54,6 +54,7 @@ const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
           <span class='text'>Vertical</span>
         </label>
       </div>
+      <p class='error'>Error</p>
       <div class='container'>
         ${renderMap()}
       </div>
@@ -67,31 +68,32 @@ const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
     );
 
   const handleClick = (square) => {
-    // Try Catch -> Display any caught errors on screen
-    const selectedShip = document.querySelector('input[name=ship]:checked')
-      ? document.querySelector('input[name=ship]:checked').value
-      : undefined;
+    const selectedShip = document.querySelector('input[name=ship]:checked').value;
 
-    if (selectedShip !== undefined) {
-      const shipOrientation = document.querySelector(
-        'input[name=orientation]:checked'
-      ).value;
+    const shipOrientation = document.querySelector(
+      'input[name=orientation]:checked'
+    ).value;
 
-      const xy = square.target.id.split('');
-      const startX = parseInt(xy[0]);
-      const startY = parseInt(xy[1]);
+    const xy = square.target.id.split('');
+    const startX = parseInt(xy[0]);
+    const startY = parseInt(xy[1]);
 
+    try {
       currentGameboard.placeShip(startX, startY, selectedShip, shipOrientation);
-
-      const container = document.querySelector('.container');
-      container.innerHTML = renderMap();
-
-      document
-        .querySelectorAll('.ocean')
-        .forEach((square) =>
-          square.addEventListener('click', (square) => handleClick(square))
-        );
+      document.querySelector('.error').style.visibility = 'hidden';
+    } catch (err) {
+      document.querySelector('.error').innerHTML = err.message;
+      document.querySelector('.error').style.visibility = 'visible';
     }
+
+    const container = document.querySelector('.container');
+    container.innerHTML = renderMap();
+
+    document
+      .querySelectorAll('.ocean')
+      .forEach((square) =>
+        square.addEventListener('click', (square) => handleClick(square))
+      );
   };
 };
 
