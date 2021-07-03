@@ -3,6 +3,7 @@
 * {
   --dark: #2c2c2c;
   --light: #f4ebd9;
+  --error: #ee776e;
   --background: #52504f;
   --blue: #23bfff;
   --miss: rgba(255, 255, 255, 0.4);
@@ -81,6 +82,12 @@ button {
 button:hover {
   color: var(--blue);
   border: 1px solid var(--blue);
+}
+
+.error {
+  margin-top: 24px;
+  visibility: hidden;
+  color: var(--error);
 }
 
 .ships {
