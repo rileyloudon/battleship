@@ -34,7 +34,7 @@ const gameboardFactory = () => {
         if (startY + newShipLength <= this.board.row[startX].length) {
           for (let i = startY; i < startY + newShipLength; i++) {
             if (this.board.row[startX][i] !== 'empty')
-              throw new Error('Ship already there');
+              throw new Error(`Can't place a ship on another ship.`);
           }
           for (let i = startY; i < startY + newShipLength; i++) {
             this.board.row[startX][i] =
@@ -47,7 +47,7 @@ const gameboardFactory = () => {
         if (startX + newShipLength <= Object.keys(this.board.row).length) {
           for (let i = startX; i < startX + newShipLength; i++) {
             if (this.board.row[i][startY] !== 'empty')
-              throw new Error('Ship already there');
+              throw new Error(`Can't place a ship on another ship.`);
           }
           for (let i = startX; i < startX + newShipLength; i++) {
             this.board.row[i][startY] =

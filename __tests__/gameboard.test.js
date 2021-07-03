@@ -148,7 +148,7 @@ test('Returns an error if placing a ship on another ship', () => {
   testGameboard.placeShip(5, 5, 'Destroyer', 'horizontal');
 
   expect(() => testGameboard.placeShip(4, 5, 'Carrier', 'vertical')).toThrow(
-    'Ship already there'
+    `Can't place a ship on another ship.`
   );
 });
 
