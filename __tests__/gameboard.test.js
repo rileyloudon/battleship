@@ -20,6 +20,30 @@ test('Gameboard records misses', () => {
   ]);
 });
 
+test('Gameboard can place ships randomly', () => {
+  jest.spyOn(global.Math, 'random').mockReturnValue(0.45);
+
+  const returnObject = shipFactory(null, null, 'Submarine');
+  const testGameboard = gameboardFactory();
+  testGameboard.randomPlaceShip('Submarine', 3);
+  expect(testGameboard.board.row[2].toString()).toStrictEqual(
+    [
+      'empty',
+      'empty',
+      'empty',
+      'empty',
+      returnObject,
+      returnObject,
+      returnObject,
+      'empty',
+      'empty',
+      'empty',
+    ].toString()
+  );
+
+  jest.spyOn(global.Math, 'random').mockRestore();
+});
+
 test('Gameboard correctly places ships horizontally', () => {
   const returnObject = shipFactory(null, null, 'Submarine');
   const testGameboard = gameboardFactory();
