@@ -1,5 +1,7 @@
 import shipFactory from './ship';
 
+// MOVE -> randomize computer ships here? then call gameboard.randomizeShips
+
 const gameboardFactory = () => {
   return {
     gameboardShips: [],
@@ -60,6 +62,27 @@ const gameboardFactory = () => {
         placeShipHoriontal(startX, startY, newShipLength);
       else if (direction === 'vertical')
         placeShipVertical(startX, startY, newShipLength);
+    },
+
+    randomPlaceShip(ship, shipLength) {
+      const orientation =
+        Math.floor(Math.random() * 2) === 0 ? 'horizontal' : 'vertical';
+
+      const startX =
+        orientation === 'horizontal'
+          ? Math.floor(Math.random() * (9 - shipLength))
+          : Math.floor(Math.random() * 9);
+
+      const startY =
+        orientation === 'horizontal'
+          ? Math.floor(Math.random() * 9)
+          : Math.floor(Math.random() * (9 - shipLength));
+
+      try {
+        this.placeShip(startX, startY, ship, orientation);
+      } catch {
+        this.randomPlaceShip(ship, shipLength);
+      }
     },
 
     removeShip(name) {
