@@ -17,7 +17,7 @@ const setupP1 = (player1, player2) => {
 
     document.getElementById('save').addEventListener('click', () => {
       try {
-        if (player1Gameboard.gameboardShips.length === 0)
+        if (player1Gameboard.gameboardShips.length === 5)
           setupP2(player1, player2, player1Gameboard);
         else throw new Error('Make sure to place all your ships.');
       } catch (err) {
@@ -44,7 +44,7 @@ const setupP2 = (player1, player2, player1Gameboard) => {
 
     document.getElementById('save').addEventListener('click', () => {
       try {
-        if (player2Gameboard.gameboardShips.length === 0)
+        if (player2Gameboard.gameboardShips.length === 5)
           startGame(player1, player2, player1Gameboard, player2Gameboard);
         else throw new Error('Make sure to place all your ships.');
       } catch (err) {
