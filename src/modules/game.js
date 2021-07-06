@@ -17,7 +17,7 @@ const setupP1 = (player1, player2) => {
 
     document.getElementById('save').addEventListener('click', () => {
       try {
-        if (player1Gameboard.gameboardShips.length === 5)
+        if (player1Gameboard.gameboardShips.length === 0)
           setupP2(player1, player2, player1Gameboard);
         else throw new Error('Make sure to place all your ships.');
       } catch (err) {
@@ -44,7 +44,7 @@ const setupP2 = (player1, player2, player1Gameboard) => {
 
     document.getElementById('save').addEventListener('click', () => {
       try {
-        if (player2Gameboard.gameboardShips.length === 5)
+        if (player2Gameboard.gameboardShips.length === 0)
           startGame(player1, player2, player1Gameboard, player2Gameboard);
         else throw new Error('Make sure to place all your ships.');
       } catch (err) {
@@ -64,9 +64,6 @@ const setupP2 = (player1, player2, player1Gameboard) => {
 };
 
 const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
-  console.log(player1Gameboard.board.row);
-  console.log(player2Gameboard.board.row);
-
   const P1 = playerFactory(player1, player2Gameboard);
   const P2 = playerFactory(player2, player1Gameboard);
   let playerTurn = P1;
@@ -75,45 +72,35 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
   activeGameDOM(player1Gameboard, player2Gameboard);
 
   const handleComputerAttack = (player) => {
-    if (player === P1) {
-      playerTurn = P1;
-      setTimeout(() => {
-        P1.attack();
+    setTimeout(() => {
+      const currentGameboard =
+        playerTurn === P1 ? player2Gameboard : player1Gameboard;
 
-        document.querySelector('.container-p1').innerHTML =
-          renderP2Map(player2Gameboard);
+      player.attack();
 
-        if (player2Gameboard.allShipsSunk) {
-          gameover = true;
-          victory('Player 1');
-        } else {
-          playerTurn = P2;
+      playerTurn === P1
+        ? (document.querySelector('.container-p1').innerHTML =
+            renderP2Map(player2Gameboard))
+        : (document.querySelector('.container-p2').innerHTML =
+            renderP1Map(player1Gameboard));
 
-          document.querySelector('.indicator').innerHTML =
-            playerTurnIndicator('Player 2');
-          if (player2 === 'computer') handleComputerAttack(playerTurn);
-        }
-      }, 1000);
-    } else {
-      playerTurn = P2;
-      setTimeout(() => {
-        P2.attack();
+      if (currentGameboard.allShipsSunk) {
+        gameover = true;
+        victory(playerTurn);
+      } else {
+        playerTurn = playerTurn === P1 ? P2 : P1;
 
-        document.querySelector('.container-p2').innerHTML =
-          renderP1Map(player1Gameboard);
+        document.querySelector('.indicator').innerHTML =
+          playerTurn === P1
+            ? playerTurnIndicator('Player 1')
+            : playerTurnIndicator('Player 2');
 
-        if (player1Gameboard.allShipsSunk) {
-          gameover = true;
-          victory('Player 2');
-        } else {
-          playerTurn = P1;
-          document.querySelector('.indicator').innerHTML =
-            playerTurnIndicator('Player 1');
-          if (player1 === 'computer') handleComputerAttack(playerTurn);
-        }
-      }, 1000);
-    }
+        if (playerTurn.name === 'Computer') handleComputerAttack(playerTurn);
+      }
+    }, 500);
   };
+
+  if (playerTurn.name === 'Computer') handleComputerAttack(playerTurn);
 
   document
     .querySelectorAll('.ocean')
@@ -121,17 +108,24 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
       square.addEventListener('click', (square) => handleAttack(square))
     );
 
-  if (player1 === 'computer') handleComputerAttack(playerTurn);
   const handleAttack = (square) => {
     if (!gameover) {
-      if (playerTurn === P1 && square.target.classList.contains('p2')) {
+      const opponenetString = playerTurn === P1 ? 'p2' : 'p1';
+      if (playerTurn && square.target.classList.contains(opponenetString)) {
+        const currentGameboard =
+          playerTurn === P1 ? player2Gameboard : player1Gameboard;
+
         const xy = square.target.id.split('');
         const x = parseInt(xy[0]);
         const y = parseInt(xy[1]);
-        P1.attack(x, y);
 
-        document.querySelector('.container-p1').innerHTML =
-          renderP2Map(player2Gameboard);
+        playerTurn.attack(x, y);
+
+        playerTurn === P1
+          ? (document.querySelector('.container-p1').innerHTML =
+              renderP2Map(player2Gameboard))
+          : (document.querySelector('.container-p2').innerHTML =
+              renderP1Map(player1Gameboard));
 
         document
           .querySelectorAll('.ocean')
@@ -139,40 +133,18 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
             square.addEventListener('click', (square) => handleAttack(square))
           );
 
-        if (player2Gameboard.allShipsSunk) {
+        if (currentGameboard.allShipsSunk) {
           gameover = true;
-          victory('Player 1');
+          victory(playerTurn);
         } else {
-          document.querySelector('.indicator').innerHTML =
-            playerTurnIndicator('Player 2');
-
-          if (player2 === 'computer') handleComputerAttack(P2);
-          else playerTurn = P2;
-        }
-      } else if (playerTurn === P2 && square.target.classList.contains('p1')) {
-        const xy = square.target.id.split('');
-        const x = parseInt(xy[0]);
-        const y = parseInt(xy[1]);
-        P2.attack(x, y);
-
-        document.querySelector('.container-p2').innerHTML =
-          renderP1Map(player1Gameboard);
-
-        document
-          .querySelectorAll('.ocean')
-          .forEach((square) =>
-            square.addEventListener('click', (square) => handleAttack(square))
-          );
-
-        if (player1Gameboard.allShipsSunk) {
-          gameover = true;
-          victory('Player 2');
-        } else {
-          if (player1 === 'computer') handleComputerAttack(P1);
-          else playerTurn = P1;
+          playerTurn = playerTurn === P1 ? P2 : P1;
 
           document.querySelector('.indicator').innerHTML =
-            playerTurnIndicator('Player 1');
+            playerTurn === P1
+              ? playerTurnIndicator('Player 1')
+              : playerTurnIndicator('Player 2');
+
+          if (playerTurn.name === 'Computer') handleComputerAttack(playerTurn);
         }
       }
     }
