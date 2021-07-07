@@ -34,14 +34,13 @@ const shipFactory = (startX, startY, name, orientation) => {
 
     hit(hitLocation) {
       this.hitSpots[hitLocation] = true;
+      if (this.hitSpots.every((spot) => spot === true)) {
+        this.sunk = true;
+      }
     },
 
     isSunk() {
-      if (this.hitSpots.every((spot) => spot === true)) {
-        this.sunk = true;
-        return true;
-      }
-      return false;
+      return this.sunk ? true : false;
     },
   };
 };
