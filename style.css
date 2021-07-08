@@ -121,11 +121,12 @@ button:hover {
 
 .miss {
   background-color: var(--miss);
-  /* border: 1px solid var(--miss); */
+  border: 1px solid var(--background);
 }
 
 .hit {
   background-color: var(--hit);
+  border: 1px solid var(--background);
 }
 
 .battle {
