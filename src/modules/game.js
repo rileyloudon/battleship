@@ -26,11 +26,11 @@ const setupP1 = (player1, player2) => {
       }
     });
   } else {
-    player1Gameboard.randomPlaceShip('Carrier', 5);
-    player1Gameboard.randomPlaceShip('Battleship', 4);
-    player1Gameboard.randomPlaceShip('Cruiser', 3);
-    player1Gameboard.randomPlaceShip('Submarine', 3);
-    player1Gameboard.randomPlaceShip('Destroyer', 2);
+    // player1Gameboard.randomPlaceShip('Carrier', 5);
+    // player1Gameboard.randomPlaceShip('Battleship', 4);
+    // player1Gameboard.randomPlaceShip('Cruiser', 3);
+    // player1Gameboard.randomPlaceShip('Submarine', 3);
+    // player1Gameboard.randomPlaceShip('Destroyer', 2);
 
     setupP2(player1, player2, player1Gameboard);
   }
@@ -55,9 +55,9 @@ const setupP2 = (player1, player2, player1Gameboard) => {
   } else {
     player2Gameboard.randomPlaceShip('Carrier', 5);
     player2Gameboard.randomPlaceShip('Battleship', 4);
-    player2Gameboard.randomPlaceShip('Cruiser', 3);
-    player2Gameboard.randomPlaceShip('Submarine', 3);
-    player2Gameboard.randomPlaceShip('Destroyer', 2);
+    // player2Gameboard.randomPlaceShip('Cruiser', 3);
+    // player2Gameboard.randomPlaceShip('Submarine', 3);
+    // player2Gameboard.randomPlaceShip('Destroyer', 2);
 
     startGame(player1, player2, player1Gameboard, player2Gameboard);
   }
@@ -86,7 +86,7 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
 
       if (currentGameboard.allShipsSunk) {
         gameover = true;
-        victory(playerTurn);
+        victory(playerTurn === P1 ? 'Player 1' : 'Player 2');
       } else {
         playerTurn = playerTurn === P1 ? P2 : P1;
 
@@ -102,11 +102,13 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
 
   if (playerTurn.name === 'Computer') handleComputerAttack(playerTurn);
 
-  document
-    .querySelectorAll('.ocean')
-    .forEach((square) =>
-      square.addEventListener('click', (square) => handleAttack(square))
-    );
+  if (P1.name !== 'Computer' && P2.name !== 'Computer') {
+    document
+      .querySelectorAll('.ocean')
+      .forEach((square) =>
+        square.addEventListener('click', (square) => handleAttack(square))
+      );
+  }
 
   const handleAttack = (square) => {
     if (!gameover) {
@@ -135,7 +137,7 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
 
         if (currentGameboard.allShipsSunk) {
           gameover = true;
-          victory(playerTurn);
+          victory(playerTurn === P1 ? 'Player 1' : 'Player 2');
         } else {
           playerTurn = playerTurn === P1 ? P2 : P1;
 
