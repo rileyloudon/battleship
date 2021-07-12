@@ -2,11 +2,15 @@
 
 * {
   --dark: #2c2c2c;
-  --light: #f4ebd9;
+  --light: #ccc;
   --error: #ee776e;
+  --error-light: #dd0000;
   --background: #52504f;
   --blue: #23bfff;
+  --blue-light-text: #0051ff;
+  --blue-light: #0051ffbb;
   --miss: rgba(255, 255, 255, 0.4);
+  --miss-light: rgba(3, 3, 3, 0.225);
   --hit: rgba(255, 0, 0, 0.4);
 }
 
@@ -95,9 +99,6 @@ button:hover {
   display: block;
 }
 
-.ship-orientation {
-}
-
 .container,
 .container-p1,
 .container-p2 {
@@ -116,7 +117,8 @@ button:hover {
 }
 
 .occupied {
-  border: 1px solid var(--blue);
+  background-color: var(--blue);
+  border: 1px solid var(--background);
 }
 
 .miss {
@@ -145,8 +147,43 @@ button:hover {
     background-color: var(--light);
   }
 
+  h1,
   h2,
+  h4,
   p {
     color: var(--dark);
+  }
+
+  input[type='radio'] + span {
+    color: var(--dark);
+  }
+
+  input[type='radio']:checked + span {
+    border-bottom: 1px solid var(--blue-light-text);
+    color: var(--blue-light-text);
+  }
+
+  button {
+    color: var(--dark);
+    border: 1px solid var(--dark);
+  }
+
+  button:hover {
+    color: var(--blue-light);
+    border: 1px solid var(--blue-light);
+  }
+
+  .error {
+    color: var(--error-light);
+  }
+
+  .occupied {
+    background-color: var(--blue-light);
+    border: 1px solid var(--background);
+  }
+
+  .miss {
+    background-color: var(--miss-light);
+    border: 1px solid var(--background);
   }
 }
