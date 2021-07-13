@@ -5,186 +5,142 @@ const playerFactory = (playerType, gameboard) => {
         availableAttacks: [...Array(100).keys()],
         foundShipSpot: undefined,
         attackVertical: false,
+
+        horizontalSquareBeforeHit: undefined,
         verticalSquareBeforeHit: undefined,
 
         attack() {
           let selectedAttack = undefined;
 
+          const randomAttack = () => {
+            const randomNumber = Math.floor(
+              Math.random() * (this.availableAttacks.length - 1)
+            );
+
+            selectedAttack = this.availableAttacks[randomNumber];
+
+            selectedAttack =
+              selectedAttack < 10
+                ? ('0' + selectedAttack).split('')
+                : selectedAttack.toString().split('');
+          };
+
+          const verticalAttack = () => {
+            for (let i = this.foundShipSpot[0]; i >= '0'; i--) {
+              if (gameboard.board.row[i][this.foundShipSpot[1]] !== 'hit') {
+                this.verticalSquareBeforeHit = i;
+                break;
+              }
+            }
+
+            if (
+              this.foundShipSpot[0] !== '9' &&
+              (gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
+                this.foundShipSpot[1]
+              ] === 'empty' ||
+                typeof gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
+                  this.foundShipSpot[1]
+                ] === 'object')
+            ) {
+              selectedAttack = [
+                (parseInt(this.foundShipSpot[0]) + 1).toString(),
+                this.foundShipSpot[1],
+              ];
+            } else if (
+              this.foundShipSpot[0] !== '0' &&
+              this.verticalSquareBeforeHit !== undefined &&
+              (gameboard.board.row[this.verticalSquareBeforeHit][
+                this.foundShipSpot[1]
+              ] === 'empty' ||
+                typeof gameboard.board.row[this.verticalSquareBeforeHit][
+                  this.foundShipSpot[1]
+                ] === 'object')
+            ) {
+              selectedAttack = [
+                this.verticalSquareBeforeHit.toString(),
+                this.foundShipSpot[1],
+              ];
+            } else {
+              randomAttack();
+              this.attackVertical = false;
+              this.foundShipSpot = undefined;
+            }
+          };
+
           if (this.foundShipSpot) {
             if (!this.attackVertical) {
+              for (let i = this.foundShipSpot[1]; i >= '0'; i--) {
+                if (gameboard.board.row[this.foundShipSpot[0]][i] !== 'hit') {
+                  this.horizontalSquareBeforeHit = i;
+                  break;
+                }
+              }
+
               if (
-                this.foundShipSpot[1] < 9 &&
-                gameboard.board.row[this.foundShipSpot[0]][
+                this.foundShipSpot[1] !== '9' &&
+                (gameboard.board.row[this.foundShipSpot[0]][
                   parseInt(this.foundShipSpot[1]) + 1
-                ] !== 'hit' &&
-                gameboard.board.row[this.foundShipSpot[0]][
-                  parseInt(this.foundShipSpot[1]) + 1
-                ] !== 'miss'
+                ] === 'empty' ||
+                  typeof gameboard.board.row[this.foundShipSpot[0]][
+                    parseInt(this.foundShipSpot[1]) + 1
+                  ] === 'object')
               ) {
                 selectedAttack = [
                   this.foundShipSpot[0],
                   (parseInt(this.foundShipSpot[1]) + 1).toString(),
                 ];
               } else if (
-                this.foundShipSpot[1] > 0 &&
-                gameboard.board.row[this.foundShipSpot[0]][
-                  gameboard.board.row[this.foundShipSpot[0]].findIndex(
-                    (square) => square === 'hit'
-                  ) - 1
-                ] !== 'miss'
+                this.foundShipSpot[1] !== '0' &&
+                this.horizontalSquareBeforeHit !== undefined &&
+                (gameboard.board.row[this.foundShipSpot[0]][
+                  this.horizontalSquareBeforeHit
+                ] === 'empty' ||
+                  typeof gameboard.board.row[this.foundShipSpot[0]][
+                    this.horizontalSquareBeforeHit
+                  ] === 'object')
               ) {
-                let squareBeforeHit =
-                  gameboard.board.row[this.foundShipSpot[0]].findIndex(
-                    (square) => square === 'hit'
-                  ) - 1;
-                selectedAttack = [this.foundShipSpot[0], squareBeforeHit];
+                selectedAttack = [
+                  this.foundShipSpot[0],
+                  this.horizontalSquareBeforeHit.toString(),
+                ];
               } else if (
-                (gameboard.board.row[this.foundShipSpot[0]][
-                  parseInt(this.foundShipSpot[1]) + 1
-                ] === 'miss' ||
-                  this.foundShipSpot[1] === 9) &&
-                (gameboard.board.row[this.foundShipSpot[0]][
-                  parseInt(this.foundShipSpot[1]) - 1
-                ] === 'miss' ||
-                  this.foundShipSpot[1] === 0)
+                (this.foundShipSpot[1] === '9' ||
+                  gameboard.board.row[this.foundShipSpot[0]][
+                    parseInt(this.foundShipSpot[1]) + 1
+                  ] === 'miss') &&
+                (this.foundShipSpot[1] === '0' ||
+                  gameboard.board.row[this.foundShipSpot[0]][
+                    parseInt(this.foundShipSpot[1]) - 1
+                  ] === 'miss')
               ) {
                 this.attackVertical = true;
-                if (
-                  this.foundShipSpot[0] < 9 &&
-                  gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
-                    this.foundShipSpot[1]
-                  ] !== 'hit' &&
-                  gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
-                    this.foundShipSpot[1]
-                  ] !== 'miss'
-                ) {
-                  for (let i = 0; i < 9; i++) {
-                    if (gameboard.board.row[i][this.foundShipSpot[1]] === 'hit')
-                      break;
-                    else this.verticalSquareBeforeHit = i;
-                  }
-                  selectedAttack = [
-                    (parseInt(this.foundShipSpot[0]) + 1).toString(),
-                    this.foundShipSpot[1],
-                  ];
-                } else {
-                  for (let i = 0; i < 9; i++) {
-                    if (gameboard.board.row[i][this.foundShipSpot[1]] === 'hit')
-                      break;
-                    else this.verticalSquareBeforeHit = i;
-                  }
-                  console.log(this.verticalSquareBeforeHit);
-                  selectedAttack = [
-                    this.verticalSquareBeforeHit.toString(),
-                    this.foundShipSpot[1],
-                  ];
-                }
+                verticalAttack();
               } else {
-                const randomAttack = Math.floor(
-                  Math.random() * (this.availableAttacks.length - 1)
-                );
-
-                selectedAttack = this.availableAttacks[randomAttack];
-
-                this.availableAttacks.splice(randomAttack, 1);
-
-                selectedAttack =
-                  selectedAttack < 10
-                    ? ('0' + selectedAttack).split('')
-                    : selectedAttack.toString().split('');
-
-                this.foundShipSpot = undefined;
+                randomAttack();
               }
             } else {
-              if (
-                this.foundShipSpot[0] < 9 &&
-                gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
-                  this.foundShipSpot[1]
-                ] !== 'hit' &&
-                gameboard.board.row[parseInt(this.foundShipSpot[0]) + 1][
-                  this.foundShipSpot[1]
-                ] !== 'miss'
-              ) {
-                for (let i = 0; i < 9; i++) {
-                  if (gameboard.board.row[i][this.foundShipSpot[1]] === 'hit') break;
-                  else this.verticalSquareBeforeHit = i;
-                }
-                console.log(this.verticalSquareBeforeHit);
-                selectedAttack = [
-                  (parseInt(this.foundShipSpot[0]) + 1).toString(),
-                  this.foundShipSpot[1],
-                ];
-              } else if (
-                this.foundShipSpot[0] > 0 &&
-                gameboard.board.row[this.verticalSquareBeforeHit][
-                  this.foundShipSpot[1]
-                ] !== 'miss'
-              ) {
-                for (let i = 0; i < 9; i++) {
-                  if (gameboard.board.row[i][this.foundShipSpot[1]] === 'hit') break;
-                  else this.verticalSquareBeforeHit = i;
-                }
-                selectedAttack = [
-                  this.verticalSquareBeforeHit.toString(),
-                  this.foundShipSpot[1],
-                ];
-              } else {
-                // RANDOM ATTACK
-                const randomAttack = Math.floor(
-                  Math.random() * (this.availableAttacks.length - 1)
-                );
-
-                selectedAttack = this.availableAttacks[randomAttack];
-
-                this.availableAttacks.splice(randomAttack, 1);
-
-                selectedAttack =
-                  selectedAttack < 10
-                    ? ('0' + selectedAttack).split('')
-                    : selectedAttack.toString().split('');
-
-                this.foundShipSpot = undefined;
-              }
+              verticalAttack();
             }
 
             if (selectedAttack < 10)
               selectedAttack = ('0' + selectedAttack).split('');
-
-            if (
-              gameboard.board.row[selectedAttack[0]][selectedAttack[1]] !== 'empty'
-            ) {
-              this.foundShipSpot = selectedAttack;
-            }
-
-            const removeAttack = this.availableAttacks.findIndex(
-              (num) => num === parseInt(selectedAttack.join(''))
-            );
-            this.availableAttacks.splice(removeAttack, 1);
           } else {
-            const randomAttack = Math.floor(
-              Math.random() * (this.availableAttacks.length - 1)
-            );
-
-            selectedAttack = this.availableAttacks[randomAttack];
-
-            this.availableAttacks.splice(randomAttack, 1);
-
-            selectedAttack =
-              selectedAttack < 10
-                ? ('0' + selectedAttack).split('')
-                : selectedAttack.toString().split('');
-
-            if (
-              gameboard.board.row[selectedAttack[0]][selectedAttack[1]] !== 'empty'
-            ) {
-              this.foundShipSpot = selectedAttack;
-            }
+            randomAttack();
           }
 
-          console.log(selectedAttack);
+          if (
+            gameboard.board.row[selectedAttack[0]][selectedAttack[1]] !== 'empty'
+          ) {
+            this.foundShipSpot = selectedAttack;
+          }
+
           const attackX = selectedAttack[0];
           const attackY = selectedAttack[1];
 
+          const removeAttack = this.availableAttacks.findIndex(
+            (num) => num === parseInt(selectedAttack.join(''))
+          );
+          this.availableAttacks.splice(removeAttack, 1);
           gameboard.recieveAttack(attackX, attackY);
         },
       }
