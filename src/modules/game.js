@@ -26,11 +26,11 @@ const setupP1 = (player1, player2) => {
       }
     });
   } else {
-    // player1Gameboard.randomPlaceShip('Carrier', 5);
-    // player1Gameboard.randomPlaceShip('Battleship', 4);
-    // player1Gameboard.randomPlaceShip('Cruiser', 3);
-    // player1Gameboard.randomPlaceShip('Submarine', 3);
-    // player1Gameboard.randomPlaceShip('Destroyer', 2);
+    player1Gameboard.randomPlaceShip('Carrier', 5);
+    player1Gameboard.randomPlaceShip('Battleship', 4);
+    player1Gameboard.randomPlaceShip('Cruiser', 3);
+    player1Gameboard.randomPlaceShip('Submarine', 3);
+    player1Gameboard.randomPlaceShip('Destroyer', 2);
 
     setupP2(player1, player2, player1Gameboard);
   }
@@ -55,9 +55,9 @@ const setupP2 = (player1, player2, player1Gameboard) => {
   } else {
     player2Gameboard.randomPlaceShip('Carrier', 5);
     player2Gameboard.randomPlaceShip('Battleship', 4);
-    // player2Gameboard.randomPlaceShip('Cruiser', 3);
-    // player2Gameboard.randomPlaceShip('Submarine', 3);
-    // player2Gameboard.randomPlaceShip('Destroyer', 2);
+    player2Gameboard.randomPlaceShip('Cruiser', 3);
+    player2Gameboard.randomPlaceShip('Submarine', 3);
+    player2Gameboard.randomPlaceShip('Destroyer', 2);
 
     startGame(player1, player2, player1Gameboard, player2Gameboard);
   }
@@ -102,7 +102,7 @@ const startGame = (player1, player2, player1Gameboard, player2Gameboard) => {
 
   if (playerTurn.name === 'Computer') handleComputerAttack(playerTurn);
 
-  if (P1.name !== 'Computer' && P2.name !== 'Computer') {
+  if (P1.name !== 'Computer' || P2.name !== 'Computer') {
     document
       .querySelectorAll('.ocean')
       .forEach((square) =>
