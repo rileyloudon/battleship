@@ -3,14 +3,30 @@
 * {
   --dark: #2c2c2c;
   --light: #ccc;
+
   --error: #ee776e;
   --error-light: #dd0000;
+
   --background: #52504f;
+
   --blue: #23bfff;
   --blue-light-text: #0051ff;
   --blue-light: #0051ffbb;
+
+  --destroyer: rgba(146, 255, 113, 0.664);
+  --destroyer2: rgba(51, 175, 13, 0.973);
+  --submarine: rgba(25, 247, 255, 0.664);
+  --submarine2: rgb(7, 170, 175);
+  --cruiser: rgba(255, 123, 255, 0.767);
+  --cruiser2: rgba(197, 12, 197, 0.767);
+  --battleship: rgb(118, 138, 250);
+  --battleship2: rgba(33, 56, 189, 0.801);
+  --carrier: rgba(255, 247, 131, 0.664);
+  --carrier2: #ff7300;
+
   --miss: rgba(255, 255, 255, 0.4);
   --miss-light: rgba(3, 3, 3, 0.225);
+
   --hit: rgba(255, 0, 0, 0.4);
 }
 
@@ -54,8 +70,8 @@ input[type='radio'] {
 }
 
 input[type='radio'] + span {
-  font-size: 24px;
   color: var(--light);
+  font-size: 24px;
   padding: 12px;
 }
 
@@ -67,6 +83,51 @@ input[type='radio'] + span.text {
 input[type='radio']:checked + span {
   border-bottom: 1px solid var(--blue);
   color: var(--blue);
+}
+
+input[value='Destroyer'] + span {
+  color: var(--destroyer);
+}
+
+input[value='Destroyer']:checked + span {
+  border-bottom: 1px solid var(--destroyer);
+  color: var(--destroyer);
+}
+
+input[value='Submarine'] + span {
+  color: var(--submarine);
+}
+
+input[value='Submarine']:checked + span {
+  border-bottom: 1px solid var(--submarine);
+  color: var(--submarine);
+}
+
+input[value='Cruiser'] + span {
+  color: var(--cruiser);
+}
+
+input[value='Cruiser']:checked + span {
+  border-bottom: 1px solid var(--cruiser);
+  color: var(--cruiser);
+}
+
+input[value='Battleship'] + span {
+  color: var(--battleship);
+}
+
+input[value='Battleship']:checked + span {
+  border-bottom: 1px solid var(--battleship);
+  color: var(--battleship);
+}
+
+input[value='Carrier'] + span {
+  color: var(--carrier);
+}
+
+input[value='Carrier']:checked + span {
+  border-bottom: 1px solid var(--carrier);
+  color: var(--carrier);
 }
 
 button {
@@ -112,23 +173,43 @@ button:hover {
   grid-template-rows: repeat(10, 1fr);
 }
 
-.ocean {
+.ocean,
+.destroyer,
+.submarine,
+.cruiser,
+.battleship,
+.carrier,
+.miss,
+.hit {
   border: 1px solid var(--background);
 }
 
-.occupied {
-  background-color: var(--blue);
-  border: 1px solid var(--background);
+.destroyer {
+  background-color: var(--destroyer);
+}
+
+.submarine {
+  background-color: var(--submarine);
+}
+
+.cruiser {
+  background-color: var(--cruiser);
+}
+
+.battleship {
+  background-color: var(--battleship);
+}
+
+.carrier {
+  background-color: var(--carrier);
 }
 
 .miss {
   background-color: var(--miss);
-  border: 1px solid var(--background);
 }
 
 .hit {
   background-color: var(--hit);
-  border: 1px solid var(--background);
 }
 
 .battle {
@@ -177,9 +258,69 @@ button:hover {
     color: var(--error-light);
   }
 
-  .occupied {
-    background-color: var(--blue-light);
-    border: 1px solid var(--background);
+  input[value='Destroyer'] + span {
+    color: var(--destroyer2);
+  }
+
+  input[value='Destroyer']:checked + span {
+    border-bottom: 1px solid var(--destroyer2);
+    color: var(--destroyer2);
+  }
+
+  input[value='Submarine'] + span {
+    color: var(--submarine2);
+  }
+
+  input[value='Submarine']:checked + span {
+    border-bottom: 1px solid var(--submarine2);
+    color: var(--submarine2);
+  }
+
+  input[value='Cruiser'] + span {
+    color: var(--cruiser2);
+  }
+
+  input[value='Cruiser']:checked + span {
+    border-bottom: 1px solid var(--cruiser2);
+    color: var(--cruiser2);
+  }
+
+  input[value='Battleship'] + span {
+    color: var(--battleship2);
+  }
+
+  input[value='Battleship']:checked + span {
+    border-bottom: 1px solid var(--battleship2);
+    color: var(--battleship2);
+  }
+
+  input[value='Carrier'] + span {
+    color: var(--carrier2);
+  }
+
+  input[value='Carrier']:checked + span {
+    border-bottom: 1px solid var(--carrier2);
+    color: var(--carrier2);
+  }
+
+  .destroyer {
+    background-color: var(--destroyer2);
+  }
+
+  .submarine {
+    background-color: var(--submarine2);
+  }
+
+  .cruiser {
+    background-color: var(--cruiser2);
+  }
+
+  .battleship {
+    background-color: var(--battleship2);
+  }
+
+  .carrier {
+    background-color: var(--carrier2);
   }
 
   .miss {
