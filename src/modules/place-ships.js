@@ -6,7 +6,9 @@ const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
           .map((square, y) =>
             square === 'empty'
               ? `<div class='ocean' id='${x.toString() + y.toString()}'></div>`
-              : `<div class='occupied' id='${x.toString() + y.toString()}'></div>`
+              : `<div class='${square.name.toLowerCase()}' id='${
+                  x.toString() + y.toString()
+                }'></div>`
           )
           .join('')
       )
