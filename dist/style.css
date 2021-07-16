@@ -332,6 +332,10 @@ button:hover {
 }
 
 @media (max-width: 780px) {
+  h4 {
+    margin-top: 0;
+  }
+
   .container,
   .container-p1,
   .container-p2 {
