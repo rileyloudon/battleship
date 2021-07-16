@@ -76,6 +76,7 @@ input[type='radio'] + span {
 }
 
 input[type='radio'] + span.text {
+  white-space: nowrap;
   font-size: 16px;
   padding: 8px;
 }
@@ -150,13 +151,13 @@ button:hover {
 }
 
 .error {
-  margin-top: 24px;
+  margin-top: 18px;
   visibility: hidden;
   color: var(--error);
 }
 
 .ships {
-  margin: 20px;
+  margin: 12px;
   display: block;
 }
 
@@ -164,7 +165,7 @@ button:hover {
 .container-p1,
 .container-p2 {
   margin: auto;
-  margin-top: 20px;
+  margin-top: 18px;
   width: 500px;
   height: 500px;
   border: 1px solid var(--background);
@@ -181,6 +182,7 @@ button:hover {
 .carrier,
 .miss,
 .hit {
+  user-select: none;
   border: 1px solid var(--background);
 }
 
@@ -326,5 +328,26 @@ button:hover {
   .miss {
     background-color: var(--miss-light);
     border: 1px solid var(--background);
+  }
+}
+
+@media (max-width: 780px) {
+  .container,
+  .container-p1,
+  .container-p2 {
+    margin-top: 8px;
+    width: 75vw;
+    height: 75vw;
+  }
+
+  input[type='radio'] + span.text {
+    font-size: 14px;
+    padding: 0px;
+  }
+
+  .error {
+    margin-top: 8px;
+    visibility: hidden;
+    color: var(--error);
   }
 }
