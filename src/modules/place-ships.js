@@ -26,7 +26,7 @@ const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
       }
       <div class='ships'>
         <label>
-          <input type='radio' name='ship' value='Carrier'>
+          <input type='radio' name='ship' value='Carrier' checked>
           <span class='text ship'>Carrier (5 Spots)</span>
         </label>
         <label>
@@ -34,7 +34,7 @@ const placeHumanShips = (currentGameboard, currentPlayer, opponent) => {
           <span class='text ship'>Battleship (4 Spots)</span>
         </label>        
         <label>
-          <input type='radio' name='ship' value='Cruiser' checked>
+          <input type='radio' name='ship' value='Cruiser'>
           <span class='text ship'>Cruiser (3 Spots)</span>
         </label>        
         <label>
