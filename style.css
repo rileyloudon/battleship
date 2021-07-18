@@ -331,7 +331,7 @@ button:hover {
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 640px) {
   h4 {
     margin-top: 0;
   }
