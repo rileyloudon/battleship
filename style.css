@@ -331,7 +331,17 @@ button:hover {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1103px) {
+  .container,
+  .container-p1,
+  .container-p2 {
+    margin-top: 8px;
+    width: 450px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 1003px) {
   h4 {
     margin-top: 0;
   }
@@ -340,8 +350,8 @@ button:hover {
   .container-p1,
   .container-p2 {
     margin-top: 8px;
-    width: 75vw;
-    height: 75vw;
+    width: 400px;
+    height: 400px;
   }
 
   input[type='radio'] + span.text {
@@ -353,5 +363,15 @@ button:hover {
     margin-top: 8px;
     visibility: hidden;
     color: var(--error);
+  }
+}
+
+@media (max-width: 613px) {
+  .container,
+  .container-p1,
+  .container-p2 {
+    margin-top: 8px;
+    width: 65vw;
+    height: 65vw;
   }
 }
